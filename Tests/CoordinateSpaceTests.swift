@@ -280,6 +280,15 @@ struct AndroidCoordinateSpaceParityTests {
         #expect(coords.startX == 1 && coords.endY == 2)
     }
 
+    @Test("android tap parses --coordinate-space", arguments: ["native", "ui"])
+    func androidTapParsesFlag(value: String) throws {
+        let parsed = try AndroidTapCommand.parseAsRoot(
+            ["-x", "1", "-y", "1", "--coordinate-space", value]
+        ) as? AndroidTapCommand
+        let command = try #require(parsed)
+        #expect(command.coordinateSpace.rawValue == value)
+    }
+
     @Test("android touch parses --coordinate-space", arguments: ["native", "ui"])
     func androidTouchParsesFlag(value: String) throws {
         let parsed = try AndroidTouchCommand.parseAsRoot(
